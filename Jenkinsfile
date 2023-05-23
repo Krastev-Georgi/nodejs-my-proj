@@ -61,12 +61,13 @@ pipeline {
             }
         }
 
-        stage('Deploy') {
-           steps {
-                sh 'pkill node | true'
-                sh 'npm install -g forever'
-                sh 'forever start src/index.js'
-           }
+    stage('Deploy')
+        {
+            steps
+            {
+                sh 'docker container rm -f mynodejsapp || true'
+                sh 'docker container run -d -p 4000:3000 --name mynodejsapp ${IMAGE_NAME}'
+            }
         }
     }
 }
